@@ -146,4 +146,119 @@ phases:
     string-printable: true
     unwind: 2
   timeout: 40
-
+units:
+  - target:
+    - dir: actors/runtime/target/classes
+      file: cloud/orbit/actors/runtime/DefaultLocalObjectsCleaner.class
+      sourceDir: actors/runtime/src/main/java
+      sourceFile: cloud/orbit/actors/runtime/DefaultLocalObjectsCleaner.java
+    # Child of DefaultLocalObjectsCleaner.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/Actor.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/Actor.java
+    # Child of DefaultLocalObjectsCleaner.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/annotation/NeverDeactivate.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/annotation/NeverDeactivate.java
+    # Child of DefaultLocalObjectsCleaner.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/annotation/TimeToLive.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/annotation/TimeToLive.java
+    # Child of DefaultLocalObjectsCleaner.class
+    - dir: actors/runtime/target/classes
+      file: cloud/orbit/actors/concurrent/ConcurrentExecutionQueue.class
+      sourceDir: actors/runtime/src/main/java
+      sourceFile: cloud/orbit/actors/concurrent/ConcurrentExecutionQueue.java
+    # Child of DefaultLocalObjectsCleaner.class
+    - dir: actors/runtime/target/classes
+      file: cloud/orbit/actors/extensions/ActorDeactivationExtension.class
+      sourceDir: actors/runtime/src/main/java
+      sourceFile: cloud/orbit/actors/extensions/ActorDeactivationExtension.java
+    # Child of DefaultLocalObjectsCleaner.class
+    - dir: commons/target/classes
+      file: cloud/orbit/concurrent/Task.class
+      sourceDir: commons/src/main/java
+      sourceFile: cloud/orbit/concurrent/Task.java
+  - target:
+    - dir: actors/runtime/target/classes
+      file: cloud/orbit/actors/runtime/FastActorClassFinder.class
+      sourceDir: actors/runtime/src/main/java
+      sourceFile: cloud/orbit/actors/runtime/FastActorClassFinder.java
+    # Child of FastActorClassFinder.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/Remindable.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/Remindable.java
+    # Child of FastActorClassFinder.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/extensions/ActorClassFinder.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/extensions/ActorClassFinder.java
+  - target:
+    - dir: actors/runtime/target/classes
+      file: cloud/orbit/actors/runtime/Messaging.class
+      sourceDir: actors/runtime/src/main/java
+      sourceFile: cloud/orbit/actors/runtime/Messaging.java
+    # Child of Messaging.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/Addressable.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/Addressable.java
+    # Child of Messaging.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/annotation/Timeout.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/annotation/Timeout.java
+    # Child of Messaging.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/cluster/NodeAddress.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/cluster/NodeAddress.java
+    # Child of Messaging.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/net/HandlerAdapter.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/net/HandlerAdapter.java
+    # Child of Messaging.class
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/net/HandlerContext.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/net/HandlerContext.java
+    # Child of Messaging.class
+    - dir: commons/target/classes
+      file: cloud/orbit/lifecycle/Startable.class
+      sourceDir: commons/src/main/java
+      sourceFile: cloud/orbit/lifecycle/Startable.java
+    # Child of Messaging.class
+    - dir: commons/target/classes
+      file: cloud/orbit/exception/UncheckedException.class
+      sourceDir: commons/src/main/java
+      sourceFile: cloud/orbit/exception/UncheckedException.java
+    # Child of Messaging.class
+    - dir: commons/target/classes
+      file: cloud/orbit/util/AnnotationCache.class
+      sourceDir: commons/src/main/java
+      sourceFile: cloud/orbit/util/AnnotationCache.java
+  - target:
+    - dir: actors/core/target/classes
+      file: cloud/orbit/actors/runtime/ClassPathSearch.class
+      sourceDir: actors/core/src/main/java
+      sourceFile: cloud/orbit/actors/runtime/ClassPathSearch.java
+    # Child of ClassPathSearch.class
+    - dir: commons/target/classes
+      file: cloud/orbit/concurrent/ConcurrentHashSet.class
+      sourceDir: commons/src/main/java
+      sourceFile: cloud/orbit/concurrent/ConcurrentHashSet.java
+  - target:
+    - dir: actors/runtime/target/classes
+      file: cloud/orbit/actors/concurrent/WaitFreeExecutionSerializer.class
+      sourceDir: actors/runtime/src/main/java
+      sourceFile: cloud/orbit/actors/concurrent/WaitFreeExecutionSerializer.java
+    # Child of WaitFreeExecutionSerializer.class
+    - dir: actors/runtime/target/classes
+      file: cloud/orbit/actors/runtime/InternalUtils.class
+      sourceDir: actors/runtime/src/main/java
+      sourceFile: cloud/orbit/actors/runtime/InternalUtils.java
