@@ -12,7 +12,7 @@ phases:
     refine: true
     string-input-value: &id002 ['1', sample, the quick brown fox]
     unwind: 1
-  timeout: 20
+  timeout: 10
 - cbmcArguments:
     do-not-test-methods-with-access: *id001
     java-assume-inputs-non-null: true
@@ -34,7 +34,7 @@ phases:
     refine: true
     string-input-value: *id002
     unwind: 3
-  timeout: 60
+  timeout: 40
 - cbmcArguments:
     do-not-test-methods-with-access: [private]
     java-assume-inputs-non-null: false
@@ -47,7 +47,7 @@ phases:
     string-non-empty: false
     string-printable: true
     unwind: 3
-  timeout: 120
+  timeout: 60
 - cbmcArguments:
     do-not-test-methods-with-access: []
     java-assume-inputs-non-null: false
@@ -61,6 +61,7 @@ phases:
     string-printable: false
     unwind: 10
   timeout: 120
+
 units:
   - target:
     - dir: actors/runtime/target/classes
