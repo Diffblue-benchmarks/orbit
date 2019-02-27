@@ -1,151 +1,66 @@
-cbmcArguments: {java-generate-no-comments: true, no-trivial-tests: true}
+cbmcArguments: {cover-include-pattern: '^((?!<init>).)*$', java-generate-no-comments: true,
+  no-trivial-tests: true}
 phases:
 - cbmcArguments:
+    classpath: /tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.
     do-not-test-methods-with-access: &id001 [private]
     java-assume-inputs-non-null: true
-    java-test-input-factory-bmc-max-mutators: 10
-    java-test-input-factory-bmc-recursion-limit: 10
     java-test-input-factory-entry-point: (.*)
     java-test-output-entry-point: (.*)
     max-nondet-array-length: 2
     max-nondet-tree-depth: 1
     refine: true
-    string-input-value: &id002 [sample, SAMPLE, the quick brown fox]
+    string-input-value: &id002 ['1', sample, the quick brown fox]
     unwind: 1
-  timeout: 5
-- cbmcArguments:
-    do-not-test-methods-with-access: *id001
-    java-assume-inputs-non-null: true
-    java-test-input-factory-bmc-max-mutators: 10
-    java-test-input-factory-bmc-recursion-limit: 10
-    java-test-input-factory-entry-point: (.*)
-    java-test-output-entry-point: (.*)
-    max-nondet-array-length: 2
-    max-nondet-string-length: 8
-    max-nondet-tree-depth: 1
-    refine: true
-    string-non-empty: true
-    string-printable: true
-    unwind: 2
   timeout: 20
 - cbmcArguments:
     do-not-test-methods-with-access: *id001
     java-assume-inputs-non-null: true
-    java-test-input-factory-bmc-max-mutators: 10
-    java-test-input-factory-bmc-recursion-limit: 10
     java-test-input-factory-entry-point: (.*)
     java-test-output-entry-point: (.*)
-    max-nondet-array-length: 10
-    max-nondet-string-length: 8
-    max-nondet-tree-depth: 2
-    refine: true
-    string-non-empty: true
-    string-printable: true
-    unwind: 1
-  timeout: 40
-- cbmcArguments:
-    do-not-test-methods-with-access: *id001
-    java-assume-inputs-non-null: false
-    java-test-input-factory-bmc-max-mutators: 10
-    java-test-input-factory-bmc-recursion-limit: 10
-    java-test-input-factory-entry-point: (.*)
-    java-test-output-entry-point: (.*)
-    max-nondet-array-length: 50
-    max-nondet-string-length: 16
-    max-nondet-tree-depth: 4
-    refine: false
-    string-non-empty: false
-    string-printable: true
-    unwind: 2
-  timeout: 40
-- cbmcArguments:
-    do-not-test-methods-with-access: *id001
-    java-assume-inputs-non-null: false
-    java-test-input-factory-bmc-max-mutators: 10
-    java-test-input-factory-bmc-recursion-limit: 10
-    java-test-input-factory-entry-point: (.*)
-    java-test-output-entry-point: (.*)
-    max-nondet-array-length: 300
-    max-nondet-string-length: 100
-    max-nondet-tree-depth: 8
-    refine: false
-    string-non-empty: false
-    string-printable: true
-    unwind: 2
-  timeout: 40
-- cbmcArguments:
-    do-not-test-methods-with-access: &id003 [private]
-    java-assume-inputs-non-null: true
-    java-test-input-factory-bmc-max-mutators: 6
-    java-test-input-factory-bmc-recursion-limit: 6
-    java-test-input-factory-entry-point: &id004 [<init>, set.+, add.+]
-    java-test-output-entry-point: &id005 [get.+, is.+, has.+]
     max-nondet-array-length: 2
     max-nondet-tree-depth: 1
     refine: true
     string-input-value: *id002
     unwind: 1
-  timeout: 5
-- cbmcArguments:
-    do-not-test-methods-with-access: *id003
-    java-assume-inputs-non-null: true
-    java-test-input-factory-bmc-max-mutators: 6
-    java-test-input-factory-bmc-recursion-limit: 6
-    java-test-input-factory-entry-point: *id004
-    java-test-output-entry-point: *id005
-    max-nondet-array-length: 2
-    max-nondet-string-length: 8
-    max-nondet-tree-depth: 1
-    refine: true
-    string-non-empty: true
-    string-printable: true
-    unwind: 2
   timeout: 20
 - cbmcArguments:
-    do-not-test-methods-with-access: *id003
+    do-not-test-methods-with-access: *id001
     java-assume-inputs-non-null: true
-    java-test-input-factory-bmc-max-mutators: 6
-    java-test-input-factory-bmc-recursion-limit: 6
-    java-test-input-factory-entry-point: *id004
-    java-test-output-entry-point: *id005
-    max-nondet-array-length: 10
-    max-nondet-string-length: 8
-    max-nondet-tree-depth: 2
+    java-test-input-factory-entry-point: (.*)
+    java-test-output-entry-point: (.*)
+    max-nondet-array-length: 2
+    max-nondet-tree-depth: 1
     refine: true
-    string-non-empty: true
-    string-printable: true
-    unwind: 1
-  timeout: 40
+    string-input-value: *id002
+    unwind: 3
+  timeout: 60
 - cbmcArguments:
-    do-not-test-methods-with-access: *id003
+    do-not-test-methods-with-access: [private]
     java-assume-inputs-non-null: false
-    java-test-input-factory-bmc-max-mutators: 6
-    java-test-input-factory-bmc-recursion-limit: 6
-    java-test-input-factory-entry-point: *id004
-    java-test-output-entry-point: *id005
+    java-test-input-factory-entry-point: [<init>, set.+, add.+]
+    java-test-output-entry-point: [get.+, is.+, has.+]
     max-nondet-array-length: 50
     max-nondet-string-length: 16
     max-nondet-tree-depth: 4
     refine: false
     string-non-empty: false
     string-printable: true
-    unwind: 2
-  timeout: 40
+    unwind: 3
+  timeout: 120
 - cbmcArguments:
-    do-not-test-methods-with-access: *id003
+    do-not-test-methods-with-access: []
     java-assume-inputs-non-null: false
-    java-test-input-factory-bmc-max-mutators: 6
-    java-test-input-factory-bmc-recursion-limit: 6
-    java-test-input-factory-entry-point: *id004
-    java-test-output-entry-point: *id005
+    java-test-input-factory-entry-point: [<init>, set.+]
+    java-test-output-entry-point: [get.+]
     max-nondet-array-length: 300
-    max-nondet-string-length: 100
+    max-nondet-string-length: 200
     max-nondet-tree-depth: 8
     refine: false
     string-non-empty: false
-    string-printable: true
-    unwind: 2
-  timeout: 40
+    string-printable: false
+    unwind: 10
+  timeout: 120
 units:
   - target:
     - dir: actors/runtime/target/classes
