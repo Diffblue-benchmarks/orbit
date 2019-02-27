@@ -1,627 +1,149 @@
-# Tested on Deeptest release 1.12.0
-cbmcArguments:
-  java-generate-no-comments: true
+cbmcArguments: {java-generate-no-comments: true, no-trivial-tests: true}
 phases:
--
-  timeout: 60
-  cbmcArguments:
-    max-nondet-array-length: 10
+- cbmcArguments:
+    do-not-test-methods-with-access: &id001 [private]
+    java-assume-inputs-non-null: true
+    java-test-input-factory-bmc-max-mutators: 10
+    java-test-input-factory-bmc-recursion-limit: 10
+    java-test-input-factory-entry-point: (.*)
+    java-test-output-entry-point: (.*)
+    max-nondet-array-length: 2
+    max-nondet-tree-depth: 1
+    refine: true
+    string-input-value: &id002 [sample, SAMPLE, the quick brown fox]
     unwind: 1
-    string-non-empty: true
+  timeout: 5
+- cbmcArguments:
+    do-not-test-methods-with-access: *id001
     java-assume-inputs-non-null: true
--
-  timeout: 60
-  cbmcArguments:
-    classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+    java-test-input-factory-bmc-max-mutators: 10
+    java-test-input-factory-bmc-recursion-limit: 10
+    java-test-input-factory-entry-point: (.*)
+    java-test-output-entry-point: (.*)
+    max-nondet-array-length: 2
+    max-nondet-string-length: 8
+    max-nondet-tree-depth: 1
+    refine: true
+    string-non-empty: true
+    string-printable: true
+    unwind: 2
+  timeout: 20
+- cbmcArguments:
+    do-not-test-methods-with-access: *id001
+    java-assume-inputs-non-null: true
+    java-test-input-factory-bmc-max-mutators: 10
+    java-test-input-factory-bmc-recursion-limit: 10
+    java-test-input-factory-entry-point: (.*)
+    java-test-output-entry-point: (.*)
     max-nondet-array-length: 10
+    max-nondet-string-length: 8
+    max-nondet-tree-depth: 2
+    refine: true
+    string-non-empty: true
+    string-printable: true
     unwind: 1
--
-  timeout: 60
-  cbmcArguments:
-    classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
-    max-nondet-array-length: 20
-    unwind: 2
-    string-non-empty: true
-    java-assume-inputs-non-null: true
--
-  timeout: 60
-  cbmcArguments:
-    classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
-    max-nondet-array-length: 20
-    unwind: 2
--
-  timeout: 60
-  cbmcArguments:
-    classpath: '/tools/cbmc/models.jar:.'
-    max-nondet-array-length: 30
-    max-nondet-string-length: 10
-    unwind: 3
-    string-non-empty: true
-    java-assume-inputs-non-null: true
--
-  timeout: 60
-  cbmcArguments:
-    classpath: '/tools/cbmc/models.jar:.'
-    max-nondet-array-length: 30
-    max-nondet-string-length: 10
-    unwind: 3
--
-  timeout: 120
-  cbmcArguments:
-    classpath: '/tools/cbmc/models.jar:.'
-    max-nondet-array-length: 30
-    max-nondet-string-length: 10
-    unwind: 4
-    load-containing-class-only: true
-    string-non-empty: true
-    java-assume-inputs-non-null: true
--
-  timeout: 120
-  cbmcArguments:
-    classpath: '/tools/cbmc/models.jar:.'
+  timeout: 40
+- cbmcArguments:
+    do-not-test-methods-with-access: *id001
+    java-assume-inputs-non-null: false
+    java-test-input-factory-bmc-max-mutators: 10
+    java-test-input-factory-bmc-recursion-limit: 10
+    java-test-input-factory-entry-point: (.*)
+    java-test-output-entry-point: (.*)
     max-nondet-array-length: 50
-    max-nondet-string-length: 50
-    unwind: 4
-    load-containing-class-only: true
--
-  timeout: 120
-  cbmcArguments:
-    classpath: '/tools/cbmc/models.jar:.'
-    max-nondet-array-length: 130
-    max-nondet-string-length: 110
-    unwind: 10
-    string-non-empty: true
-    java-assume-inputs-non-null: true
--
-  timeout: 120
-  cbmcArguments:
-    classpath: '/tools/cbmc/models.jar:.'
+    max-nondet-string-length: 16
+    max-nondet-tree-depth: 4
+    refine: false
+    string-non-empty: false
+    string-printable: true
+    unwind: 2
+  timeout: 40
+- cbmcArguments:
+    do-not-test-methods-with-access: *id001
+    java-assume-inputs-non-null: false
+    java-test-input-factory-bmc-max-mutators: 10
+    java-test-input-factory-bmc-recursion-limit: 10
+    java-test-input-factory-entry-point: (.*)
+    java-test-output-entry-point: (.*)
     max-nondet-array-length: 300
     max-nondet-string-length: 100
-    unwind: 10
-units:
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/DefaultLocalObjectsCleaner.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/DefaultLocalObjectsCleaner.java
-    # Child of DefaultLocalObjectsCleaner.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/Actor.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/Actor.java
-    # Child of DefaultLocalObjectsCleaner.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/annotation/NeverDeactivate.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/annotation/NeverDeactivate.java
-    # Child of DefaultLocalObjectsCleaner.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/annotation/TimeToLive.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/annotation/TimeToLive.java
-    # Child of DefaultLocalObjectsCleaner.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/concurrent/ConcurrentExecutionQueue.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/concurrent/ConcurrentExecutionQueue.java
-    # Child of DefaultLocalObjectsCleaner.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/extensions/ActorDeactivationExtension.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/ActorDeactivationExtension.java
-    # Child of DefaultLocalObjectsCleaner.class
-    - dir: commons/target/classes
-      file: cloud/orbit/concurrent/Task.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/concurrent/Task.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/FastActorClassFinder.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/FastActorClassFinder.java
-    # Child of FastActorClassFinder.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/Remindable.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/Remindable.java
-    # Child of FastActorClassFinder.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/ActorClassFinder.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/ActorClassFinder.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/Messaging.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/Messaging.java
-    # Child of Messaging.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/Addressable.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/Addressable.java
-    # Child of Messaging.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/annotation/Timeout.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/annotation/Timeout.java
-    # Child of Messaging.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/cluster/NodeAddress.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/cluster/NodeAddress.java
-    # Child of Messaging.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/net/HandlerAdapter.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/net/HandlerAdapter.java
-    # Child of Messaging.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/net/HandlerContext.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/net/HandlerContext.java
-    # Child of Messaging.class
-    - dir: commons/target/classes
-      file: cloud/orbit/lifecycle/Startable.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/lifecycle/Startable.java
-    # Child of Messaging.class
-    - dir: commons/target/classes
-      file: cloud/orbit/exception/UncheckedException.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/exception/UncheckedException.java
-    # Child of Messaging.class
-    - dir: commons/target/classes
-      file: cloud/orbit/util/AnnotationCache.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/util/AnnotationCache.java
-  - target:
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/ClassPathSearch.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ClassPathSearch.java
-    # Child of ClassPathSearch.class
-    - dir: commons/target/classes
-      file: cloud/orbit/concurrent/ConcurrentHashSet.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/concurrent/ConcurrentHashSet.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/concurrent/WaitFreeExecutionSerializer.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/concurrent/WaitFreeExecutionSerializer.java
-    # Child of WaitFreeExecutionSerializer.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/InternalUtils.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/InternalUtils.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/Hosting.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/Hosting.java
-    # Child of Hosting.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/Stage.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/Stage.java
-    # Child of Hosting.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/annotation/OnlyIfActivated.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/annotation/OnlyIfActivated.java
-    # Child of Hosting.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/annotation/PreferLocalPlacement.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/annotation/PreferLocalPlacement.java
-    # Child of Hosting.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/annotation/StatelessWorker.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/annotation/StatelessWorker.java
-    # Child of Hosting.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/cluster/ClusterPeer.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/cluster/ClusterPeer.java
-    # Child of Hosting.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/exceptions/ObserverNotFound.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/exceptions/ObserverNotFound.java
-    # Child of Hosting.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/NodeSelectorExtension.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/NodeSelectorExtension.java
-    # Child of Hosting.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/PipelineExtension.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/PipelineExtension.java
-  - target:
-    - dir: actors/infinispan-cluster/target/classes
-      file: cloud/orbit/actors/cluster/JGroupsClusterPeer.class
-      sourceDir: actors/infinispan-cluster/src/main/java
-      sourceFile: cloud/orbit/actors/cluster/JGroupsClusterPeer.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/KryoSerializer.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/KryoSerializer.java
-    # Child of KryoSerializer.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/ActorObserver.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/ActorObserver.java
-    # Child of KryoSerializer.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/cloner/ExecutionObjectCloner.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/cloner/ExecutionObjectCloner.java
-    # Child of KryoSerializer.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/cluster/NodeAddressImpl.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/cluster/NodeAddressImpl.java
-    # Child of KryoSerializer.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/MessageSerializer.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/MessageSerializer.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/concurrent/ConcurrentExecutionQueue.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/concurrent/ConcurrentExecutionQueue.java
-  - target:
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/DefaultClassDictionary.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/DefaultClassDictionary.java
-    # Child of DefaultClassDictionary.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/annotation/ClassIdStrategy.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/annotation/ClassIdStrategy.java
-    # Child of DefaultClassDictionary.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/reflection/ClassIdGenerationStrategy.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/reflection/ClassIdGenerationStrategy.java
-    # Child of DefaultClassDictionary.class
-    - dir: commons/target/classes
-      file: cloud/orbit/util/IOUtils.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/util/IOUtils.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/SerializationHandler.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/SerializationHandler.java
-    # Child of SerializationHandler.class
-    - dir: commons/target/classes
-      file: cloud/orbit/tuples/Pair.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/tuples/Pair.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/MessageLoopback.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/MessageLoopback.java
-    # Child of MessageLoopback.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/NamedPipelineExtension.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/NamedPipelineExtension.java
-    # Child of MessageLoopback.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/cloner/CloneHelper.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/cloner/CloneHelper.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/ActorProfiler.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ActorProfiler.java
-    # Child of ActorProfiler.class
-    - dir: commons/target/classes
-      file: cloud/orbit/profiler/ProfilerData.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/profiler/ProfilerData.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/streams/simple/SimpleStreamProxyObject.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/streams/simple/SimpleStreamProxyObject.java
-    # Child of SimpleStreamProxyObject.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/streams/AsyncObserver.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/streams/AsyncObserver.java
-    # Child of SimpleStreamProxyObject.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/streams/StreamSequenceToken.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/streams/StreamSequenceToken.java
-    # Child of SimpleStreamProxyObject.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/streams/StreamSubscriptionHandle.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/streams/StreamSubscriptionHandle.java
-    # Child of SimpleStreamProxyObject.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/util/IdUtils.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/util/IdUtils.java
-  - target:
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/Stage.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/Stage.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/annotation/StorageExtension.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/annotation/StorageExtension.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/concurrent/MultiExecutionSerializer.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/concurrent/MultiExecutionSerializer.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/concurrent/WaitFreeMultiExecutionSerializer.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/concurrent/WaitFreeMultiExecutionSerializer.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/ActorConstructionExtension.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/ActorConstructionExtension.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/ActorExtension.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/ActorExtension.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/extensions/DefaultLoggerExtension.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/DefaultLoggerExtension.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/LifetimeExtension.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/LifetimeExtension.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/LoggerExtension.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/LoggerExtension.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/ResponseCachingExtension.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/ResponseCachingExtension.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/extensions/StreamProvider.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/extensions/StreamProvider.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/net/DefaultPipeline.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/net/DefaultPipeline.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/net/Pipeline.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/net/Pipeline.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/AbstractActor.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/AbstractActor.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/ActorBaseEntry.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ActorBaseEntry.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/ActorEntry.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ActorEntry.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/ActorRuntime.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ActorRuntime.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/ActorTaskContext.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ActorTaskContext.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/AsyncStreamReference.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/AsyncStreamReference.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/BasicRuntime.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/BasicRuntime.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/ClusterHandler.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ClusterHandler.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/DefaultActorConstructionExtension.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/DefaultActorConstructionExtension.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/DefaultDescriptorFactory.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/DefaultDescriptorFactory.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/DefaultHandlers.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/DefaultHandlers.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/DefaultInvocationHandler.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/DefaultInvocationHandler.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/DefaultLifetimeExtension.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/DefaultLifetimeExtension.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/DefaultLocalObjectsCleaner.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/DefaultLocalObjectsCleaner.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/Execution.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/Execution.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/FastActorClassFinder.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/FastActorClassFinder.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/Hosting.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/Hosting.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/Invocation.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/Invocation.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/InvocationHandler.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/InvocationHandler.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/KryoSerializer.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/KryoSerializer.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/LazyActorClassFinder.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/LazyActorClassFinder.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/LocalObjects.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/LocalObjects.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/LocalObjectsCleaner.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/LocalObjectsCleaner.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/MessageLoopback.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/MessageLoopback.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/Messaging.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/Messaging.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/NodeCapabilities.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/NodeCapabilities.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/ObserverEntry.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ObserverEntry.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/RandomSelectorExtension.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/RandomSelectorExtension.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/Registration.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/Registration.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/ReminderController.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ReminderController.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/RemoteReference.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/RemoteReference.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/DefaultResponseCachingExtension.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/DefaultResponseCachingExtension.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/runtime/RuntimeActions.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/RuntimeActions.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/SerializationHandler.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/SerializationHandler.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/ShardedReminderController.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/ShardedReminderController.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/runtime/StatelessActorEntry.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/runtime/StatelessActorEntry.java
-    # Child of Stage.class
-    - dir: actors/core/target/classes
-      file: cloud/orbit/actors/streams/AsyncStream.class
-      sourceDir: actors/core/src/main/java
-      sourceFile: cloud/orbit/actors/streams/AsyncStream.java
-    # Child of Stage.class
-    - dir: actors/runtime/target/classes
-      file: cloud/orbit/actors/streams/simple/SimpleStreamExtension.class
-      sourceDir: actors/runtime/src/main/java
-      sourceFile: cloud/orbit/actors/streams/simple/SimpleStreamExtension.java
-    # Child of Stage.class
-    - dir: commons/target/classes
-      file: cloud/orbit/annotation/Config.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/annotation/Config.java
-    # Child of Stage.class
-    - dir: commons/target/classes
-      file: cloud/orbit/concurrent/ExecutorUtils.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/concurrent/ExecutorUtils.java
-    # Child of Stage.class
-    - dir: commons/target/classes
-      file: cloud/orbit/util/StringUtils.class
-      sourceDir: commons/src/main/java
-      sourceFile: cloud/orbit/util/StringUtils.java
+    max-nondet-tree-depth: 8
+    refine: false
+    string-non-empty: false
+    string-printable: true
+    unwind: 2
+  timeout: 40
+- cbmcArguments:
+    do-not-test-methods-with-access: &id003 [private]
+    java-assume-inputs-non-null: true
+    java-test-input-factory-bmc-max-mutators: 6
+    java-test-input-factory-bmc-recursion-limit: 6
+    java-test-input-factory-entry-point: &id004 [<init>, set.+, add.+]
+    java-test-output-entry-point: &id005 [get.+, is.+, has.+]
+    max-nondet-array-length: 2
+    max-nondet-tree-depth: 1
+    refine: true
+    string-input-value: *id002
+    unwind: 1
+  timeout: 5
+- cbmcArguments:
+    do-not-test-methods-with-access: *id003
+    java-assume-inputs-non-null: true
+    java-test-input-factory-bmc-max-mutators: 6
+    java-test-input-factory-bmc-recursion-limit: 6
+    java-test-input-factory-entry-point: *id004
+    java-test-output-entry-point: *id005
+    max-nondet-array-length: 2
+    max-nondet-string-length: 8
+    max-nondet-tree-depth: 1
+    refine: true
+    string-non-empty: true
+    string-printable: true
+    unwind: 2
+  timeout: 20
+- cbmcArguments:
+    do-not-test-methods-with-access: *id003
+    java-assume-inputs-non-null: true
+    java-test-input-factory-bmc-max-mutators: 6
+    java-test-input-factory-bmc-recursion-limit: 6
+    java-test-input-factory-entry-point: *id004
+    java-test-output-entry-point: *id005
+    max-nondet-array-length: 10
+    max-nondet-string-length: 8
+    max-nondet-tree-depth: 2
+    refine: true
+    string-non-empty: true
+    string-printable: true
+    unwind: 1
+  timeout: 40
+- cbmcArguments:
+    do-not-test-methods-with-access: *id003
+    java-assume-inputs-non-null: false
+    java-test-input-factory-bmc-max-mutators: 6
+    java-test-input-factory-bmc-recursion-limit: 6
+    java-test-input-factory-entry-point: *id004
+    java-test-output-entry-point: *id005
+    max-nondet-array-length: 50
+    max-nondet-string-length: 16
+    max-nondet-tree-depth: 4
+    refine: false
+    string-non-empty: false
+    string-printable: true
+    unwind: 2
+  timeout: 40
+- cbmcArguments:
+    do-not-test-methods-with-access: *id003
+    java-assume-inputs-non-null: false
+    java-test-input-factory-bmc-max-mutators: 6
+    java-test-input-factory-bmc-recursion-limit: 6
+    java-test-input-factory-entry-point: *id004
+    java-test-output-entry-point: *id005
+    max-nondet-array-length: 300
+    max-nondet-string-length: 100
+    max-nondet-tree-depth: 8
+    refine: false
+    string-non-empty: false
+    string-printable: true
+    unwind: 2
+  timeout: 40
+
